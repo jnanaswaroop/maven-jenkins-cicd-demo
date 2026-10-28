@@ -78,7 +78,7 @@ pipeline {
       steps {
         echo "Logging into DockerHub..."
         sh '''
-          echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+          echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
         '''
       }
     }
