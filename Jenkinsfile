@@ -2,8 +2,8 @@ pipeline {
   agent any
 
   environment {
-    IMAGE_NAME = "theshubhamgour/maven-jenkins-demo"
-    DOCKERHUB_CREDENTIALS = credentials('DockerHub')
+    IMAGE_NAME = "jnanaswaroop/maven-jenkins-demo"
+    DOCKERHUB_CREDENTIALS = credentials('DOCKERHUB-LOGIN-CREDS')
   }
 
   stages {
@@ -78,7 +78,7 @@ pipeline {
       steps {
         echo "Logging into DockerHub..."
         sh '''
-          echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+          echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
         '''
       }
     }
@@ -87,6 +87,7 @@ pipeline {
       steps {
         echo "Pushing image to DockerHub..."
         sh 'docker push $IMAGE_NAME:${BUILD_NUMBER}'
+        sh 'docker logout'
       }
     }
 
